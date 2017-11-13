@@ -32,7 +32,7 @@ import RPi.GPIO as GPIO
 
 
 
-class FishFeeder():
+class FishFeeder2():
 
   # Define GPIO signals to use
   # Physical pins 11,15,16,18
@@ -137,7 +137,7 @@ def shutdown():
 
 
 try:
-  fishFeeder = FishFeeder()
+  fishFeeder = FishFeeder2()
 
   fishFeeder.init()
   fishFeeder.feedOneServing()
