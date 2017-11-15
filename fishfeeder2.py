@@ -21,7 +21,7 @@ class FishFeeder2():
   # Define GPIO signals to use
   # Physical pins 11,15,16,18
   # GPIO17, GPIO18, GPIO22, GPIO23
-
+  isFoodLow = False
 
 ########################################################
 # Function __init__
@@ -29,6 +29,7 @@ class FishFeeder2():
 
   def __init__(self):
     print "__init__"
+# End Function __init__
 
 
 ########################################################
@@ -48,15 +49,21 @@ class FishFeeder2():
 #      GPIO.setup(pin,GPIO.OUT)
 #    GPIO.output(pin, False)
 
-    isFoodLow = false
+    isFoodLow = False
+# End Function init
 
 
-
-
+########################################################
+# Function feedOneServing
+########################################################
 
   def feedOneServing(self):
     #print "feedOneServing"
     print "Feeding one serving..."
+
+########################################################
+# End Function feedOneServing
+########################################################
 
 
 ########################################################
@@ -76,9 +83,7 @@ def shutdown():
   print
   print "Bye!"  
 
-########################################################
-# End function shutdown
-########################################################
+# End Function shutdown
 
 
 
