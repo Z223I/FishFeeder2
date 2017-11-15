@@ -10,11 +10,6 @@ import RPi.GPIO as GPIO
 
 
 
-# Stage test
-
-
-
-
 ########################################################
 #
 # Class FishFeeder2
@@ -27,8 +22,18 @@ class FishFeeder2():
   # Physical pins 11,15,16,18
   # GPIO17, GPIO18, GPIO22, GPIO23
 
+
+########################################################
+# Function __init__
+########################################################
+
   def __init__(self):
     print "__init__"
+
+
+########################################################
+# Function init
+########################################################
 
   def init(self):
     print "init"
@@ -42,6 +47,10 @@ class FishFeeder2():
 #      print "Setup pins"
 #      GPIO.setup(pin,GPIO.OUT)
 #    GPIO.output(pin, False)
+
+    isFoodLow = false
+
+
 
 
 
@@ -58,9 +67,7 @@ class FishFeeder2():
 
 
 ########################################################
-#
 # Function shutdown
-#
 ########################################################
 
 
