@@ -4,7 +4,7 @@
 
 # Import required libraries
 #import sys
-#import time
+import time
 import RPi.GPIO as GPIO
 
 
@@ -18,17 +18,22 @@ import RPi.GPIO as GPIO
 
 class FishFeeder2():
 
-  # Define GPIO signals to use
-  # Physical pins 11,15,16,18
-  # GPIO17, GPIO18, GPIO22, GPIO23
-  isFoodLow = False
 
 ########################################################
 # Function __init__
 ########################################################
 
-  def __init__(self):
+  def __init__(self, _foodDoorPin, _foodLowPin, _laserPin):
     print "__init__"
+
+    # Define GPIO signals to use
+    # Physical pins 11,15,16,18
+    # GPIO17, GPIO18, GPIO22, GPIO23
+    
+    self.foodDoorPin = _foodDoorPin
+    self.foodLowPin  = _foodLowPin
+    self.laserPin    = _laserPin
+    self.isFoodLow   = False
 # End Function __init__
 
 
@@ -47,7 +52,16 @@ class FishFeeder2():
 #    for pin in self.StepPins:
 #      print "Setup pins"
 #      GPIO.setup(pin,GPIO.OUT)
-#    GPIO.output(pin, False)
+#      GPIO.output(pin, False)
+
+    GPIO.setup(foodDoorPin, GPIO.OUT)
+    GPIO.output(foodDoorPin, False)
+
+    GPIO.setup(laserPin, GPIO.OUT)
+    GPIO.output(laserPin, False)
+
+    GPIO.setup(foodLowPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Pull low
+    #GPIO.output(foodDoorPin, False)
 
     isFoodLow = False
 # End Function init
@@ -60,9 +74,35 @@ class FishFeeder2():
   def feedOneServing(self):
     #print "feedOneServing"
     print "Feeding one serving..."
+    foodDoorPin = True
+    time.sleep(1.0)
+    foodDoorPin = False
 
 ########################################################
 # End Function feedOneServing
+########################################################
+
+
+########################################################
+# Function checkFoodLow
+########################################################
+
+  def checkFoodLow(self):
+    print "Check food low..."
+
+    # Turn on laser
+    GPIO.output(self.laserPin, True)
+    time.sleep(.5)
+
+    # Read laser detector
+    isFoodLow = GPIO.input(foodLowPin)
+
+    # Turn off laser
+    GPIO.output(self.laserPin, False)
+
+
+########################################################
+# End Function checkFoodLow
 ########################################################
 
 
@@ -94,10 +134,18 @@ def shutdown():
 ########################################################
 
 try:
-  fishFeeder = FishFeeder2()
+  foodDoorPin = 17
+  foodLowPin  = 18
+  laserPin    = 22
+
+  fishFeeder = FishFeeder2(foodDoorPin, foodLowPin, laserPin)
 
   fishFeeder.init()
   fishFeeder.feedOneServing()
+
+  fishFeeder.checkFoodLow()
+  print "Food low = ", fishFeeder.isFoodLow
+
 # End try
 
 except KeyboardInterrupt:
