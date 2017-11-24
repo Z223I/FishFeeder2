@@ -89,7 +89,17 @@ class FishFeeder2():
 
   def checkFoodLow(self):
     print "Check food low..."
-    isFoodLow = GPIO.Input(foodLowPin)
+
+    # Turn on laser
+    GPIO.output(self.laserPin, True)
+    time.sleep(.5)
+
+    # Read laser detector
+    isFoodLow = GPIO.input(foodLowPin)
+
+    # Turn off laser
+    GPIO.output(self.laserPin, False)
+
 
 ########################################################
 # End Function checkFoodLow
@@ -132,6 +142,10 @@ try:
 
   fishFeeder.init()
   fishFeeder.feedOneServing()
+
+  fishFeeder.checkFoodLow()
+  print "Food low = ", fishFeeder.isFoodLow
+
 # End try
 
 except KeyboardInterrupt:
