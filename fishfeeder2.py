@@ -75,21 +75,15 @@ class FishFeeder2():
 ########################################################
 
   def feedOneServing(self):
-
-
-
-
-
-# TODO Two pins are required.   Finish the mod
-
-
-
-
     #print "feedOneServing"
     print "Feeding one serving..."
     foodDoorPinA = True
-    time.sleep(1.0)
+    foodDoorPinB = False
+    time.sleep(.2)
     foodDoorPinA = False
+    foodDoorPinB = True
+    time.sleep(.2)
+    foodDoorPinB = False
 
 ########################################################
 # End Function feedOneServing
