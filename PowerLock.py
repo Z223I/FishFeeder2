@@ -61,7 +61,7 @@ class PowerLock():
 
 
 ########################################################
-# Function feedOneServing
+# Function cycle
 ########################################################
 
 
@@ -70,19 +70,35 @@ class PowerLock():
 
 
 
-  def feedOneServing(self):
+  def cycle(self):
     #print "feedOneServing"
     print "Feeding one serving..."
     powerLockPinA = True
+    GPIO.output(powerLockPinA, True)
+
+
     powerLockPinB = False
+    GPIO.output(powerLockPinB, False)
+
     time.sleep(.2)
+
+
     powerLockPinA = False
+    GPIO.output(powerLockPinA, False)
+
+
     powerLockPinB = True
+    GPIO.output(powerLockPinB, True)
+
+
     time.sleep(.2)
+
+
     powerLockPinB = False
+    GPIO.output(powerLockPinB, False)
 
 ########################################################
-# End Function feedOneServing
+# End Function cycle
 ########################################################
 
 
@@ -120,7 +136,7 @@ try:
   powerLock = PowerLock(powerLockPinA, powerLockPinB)
 
   powerLock.init()
-  powerLock.feedOneServing()
+  powerLock.cycle()
 
 # End try
 
