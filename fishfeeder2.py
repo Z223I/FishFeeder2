@@ -6,7 +6,7 @@
 #import sys
 import time
 import RPi.GPIO as GPIO
-
+from PowerLock import PowerLock
 
 
 
@@ -30,8 +30,7 @@ class FishFeeder2():
     # Physical pins 11,15,16,18
     # GPIO17, GPIO18, GPIO22, GPIO23
     
-    self.foodDoorPinA = _foodDoorPinA
-    self.foodDoorPinB = _foodDoorPinB
+    self.foodDoor = PowerLock(_foodDoorPinA, _foodDoorPinB)
     self.foodLowPin  = _foodLowPin
     self.laserPin    = _laserPin
     self.isFoodLow   = False
@@ -49,24 +48,14 @@ class FishFeeder2():
     # instead of physical pin numbers
     GPIO.setmode(GPIO.BCM)
 
-    # Set all pins as output
-#    for pin in self.StepPins:
-#      print "Setup pins"
-#      GPIO.setup(pin,GPIO.OUT)
-#      GPIO.output(pin, False)
+    self.foodDoor.init()
 
-    GPIO.setup(foodDoorPinA, GPIO.OUT)
-    GPIO.output(foodDoorPinA, False)
-    GPIO.setup(foodDoorPinB, GPIO.OUT)
-    GPIO.output(foodDoorPinB, False)
+    GPIO.setup(self.laserPin, GPIO.OUT)
+    GPIO.output(self.laserPin, False)
 
-    GPIO.setup(laserPin, GPIO.OUT)
-    GPIO.output(laserPin, False)
+    GPIO.setup(self.foodLowPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Pull low
 
-    GPIO.setup(foodLowPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Pull low
-    #GPIO.output(foodDoorPin, False)
-
-    isFoodLow = False
+    self.isFoodLow = False
 # End Function init
 
 
@@ -75,15 +64,9 @@ class FishFeeder2():
 ########################################################
 
   def feedOneServing(self):
-    #print "feedOneServing"
     print "Feeding one serving..."
-    foodDoorPinA = True
-    foodDoorPinB = False
-    time.sleep(.2)
-    foodDoorPinA = False
-    foodDoorPinB = True
-    time.sleep(.2)
-    foodDoorPinB = False
+    self.foodDoor.unlock()
+    self.foodDoor.lock()
 
 ########################################################
 # End Function feedOneServing
