@@ -3,7 +3,6 @@
 
 
 # Import required libraries
-#import sys
 import time
 import RPi.GPIO as GPIO
 
@@ -32,6 +31,8 @@ class PowerLock():
     
     self.powerLockPinA = _powerLockPinA
     self.powerLockPinB = _powerLockPinB
+
+    self.powerDelay = .2
 # End Function __init__
 
 
@@ -60,53 +61,74 @@ class PowerLock():
 # End Function init
 
 
+
 ########################################################
 # Function cycle
 ########################################################
 
-
-
-# TODO this should be calling GPIO.output
-
-
-
   def cycle(self):
-    #print "feedOneServing"
-    print "Feeding one serving..."
-    #powerLockPinA = True
-    GPIO.output(self.powerLockPinA, True)
-
-
-    #powerLockPinB = False
-    GPIO.output(self.powerLockPinB, False)
-
-    time.sleep(.2)
-
-
-    #powerLockPinA = False
-    GPIO.output(self.powerLockPinA, False)
-
-
-    #powerLockPinB = True
-    GPIO.output(self.powerLockPinB, True)
-
-
-    time.sleep(.2)
-
-
-    #powerLockPinB = False
-    GPIO.output(self.powerLockPinB, False)
+    self.unlock()
+    self.lock()
 
 ########################################################
 # End Function cycle
 ########################################################
 
 
+
 ########################################################
-#
-# End class PowerLock
-#
+# Function lock
 ########################################################
+
+  def lock(self):
+
+    GPIO.output(self.powerLockPinA, True)
+    GPIO.output(self.powerLockPinB, False)
+
+    time.sleep(self.powerDelay)
+
+    self.powerOff()
+
+########################################################
+# End Function lock
+########################################################
+
+
+
+########################################################
+# Function powerOff
+########################################################
+
+  def powerOff(self):
+
+    # Power off both pins
+    GPIO.output(self.powerLockPinA, False)
+    GPIO.output(self.powerLockPinB, False)
+
+
+########################################################
+# End Function powerOff
+########################################################
+
+
+
+########################################################
+# Function lock
+########################################################
+
+  def unlock(self):
+
+    GPIO.output(self.powerLockPinA, False)
+    GPIO.output(self.powerLockPinB, True)
+
+    time.sleep(self.powerDelay)
+
+    self.powerOff()
+
+########################################################
+# End Function unlock
+########################################################
+
 
 
 ########################################################
@@ -135,11 +157,7 @@ try:
 
   powerLock = PowerLock(powerLockPinA, powerLockPinB)
 
-  print "Before call"
   powerLock.init()
-  print "After call"
-
-
   powerLock.cycle()
 
 # End try
