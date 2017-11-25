@@ -141,10 +141,10 @@ def shutdown():
 ########################################################
 
 try:
-  foodDoorPinA = 17
-  foodDoorPinB = 18
-  laserPin    = 22
-# 23
+  foodDoorPinA = 2
+  foodDoorPinB = 3
+  laserPin    = 4
+# 17
 
   foodLowPin  = 24
 
