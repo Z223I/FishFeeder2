@@ -13,6 +13,12 @@ import RPi.GPIO as GPIO
 #
 # Class PowerLock
 #
+# This class manipulates an automotive power lock.
+#
+# It takes two pins to manipulate the power lock because
+# the polarity has to be changed to switch between
+# between states.
+#
 ########################################################
 
 class PowerLock():
@@ -22,7 +28,7 @@ class PowerLock():
 # Function __init__
 ########################################################
 
-  def __init__(self, _powerLockPinA,_powerLockPinB):
+  def __init__(self, _powerLockPinA, _powerLockPinB):
     print "__init__"
 
     # Define GPIO signals to use
@@ -47,12 +53,7 @@ class PowerLock():
     # instead of physical pin numbers
     GPIO.setmode(GPIO.BCM)
 
-    # Set all pins as output
-#    for pin in self.StepPins:
-#      print "Setup pins"
-#      GPIO.setup(pin,GPIO.OUT)
-#      GPIO.output(pin, False)
-
+    # Set pins to output and initialize them to false.
     GPIO.setup(self.powerLockPinA, GPIO.OUT)
     GPIO.output(self.powerLockPinA, False)
     GPIO.setup(self.powerLockPinB, GPIO.OUT)
@@ -108,6 +109,20 @@ class PowerLock():
 
 ########################################################
 # End Function powerOff
+########################################################
+
+
+
+########################################################
+# Function setPowerDelay
+########################################################
+
+  def setPowerDelay(self, _powerDelay):
+
+    self.powerDelay = _powerDelay
+
+########################################################
+# End Function setPowerDelay
 ########################################################
 
 
