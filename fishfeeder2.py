@@ -23,14 +23,15 @@ class FishFeeder2():
 # Function __init__
 ########################################################
 
-  def __init__(self, _foodDoorPin, _foodLowPin, _laserPin):
+  def __init__(self, _foodDoorPinA,_foodDoorPinB, _foodLowPin, _laserPin):
     print "__init__"
 
     # Define GPIO signals to use
     # Physical pins 11,15,16,18
     # GPIO17, GPIO18, GPIO22, GPIO23
     
-    self.foodDoorPin = _foodDoorPin
+    self.foodDoorPinA = _foodDoorPinA
+    self.foodDoorPinB = _foodDoorPinB
     self.foodLowPin  = _foodLowPin
     self.laserPin    = _laserPin
     self.isFoodLow   = False
@@ -54,8 +55,10 @@ class FishFeeder2():
 #      GPIO.setup(pin,GPIO.OUT)
 #      GPIO.output(pin, False)
 
-    GPIO.setup(foodDoorPin, GPIO.OUT)
-    GPIO.output(foodDoorPin, False)
+    GPIO.setup(foodDoorPinA, GPIO.OUT)
+    GPIO.output(foodDoorPinA, False)
+    GPIO.setup(foodDoorPinB, GPIO.OUT)
+    GPIO.output(foodDoorPinB, False)
 
     GPIO.setup(laserPin, GPIO.OUT)
     GPIO.output(laserPin, False)
@@ -72,11 +75,21 @@ class FishFeeder2():
 ########################################################
 
   def feedOneServing(self):
+
+
+
+
+
+# TODO Two pins are required.   Finish the mod
+
+
+
+
     #print "feedOneServing"
     print "Feeding one serving..."
-    foodDoorPin = True
+    foodDoorPinA = True
     time.sleep(1.0)
-    foodDoorPin = False
+    foodDoorPinA = False
 
 ########################################################
 # End Function feedOneServing
@@ -134,11 +147,14 @@ def shutdown():
 ########################################################
 
 try:
-  foodDoorPin = 17
-  foodLowPin  = 18
+  foodDoorPinA = 17
+  foodDoorPinB = 18
   laserPin    = 22
+# 23
 
-  fishFeeder = FishFeeder2(foodDoorPin, foodLowPin, laserPin)
+  foodLowPin  = 24
+
+  fishFeeder = FishFeeder2(foodDoorPinA, foodDoorPinB, foodLowPin, laserPin)
 
   fishFeeder.init()
   fishFeeder.feedOneServing()
