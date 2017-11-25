@@ -30,8 +30,8 @@ def shutdown():
 ########################################################
 
 try:
-  powerLockPinA = 17
-  powerLockPinB = 18
+  powerLockPinA = 2
+  powerLockPinB = 3
 
   powerLock = PowerLock(powerLockPinA, powerLockPinB)
 
