@@ -85,7 +85,7 @@ class FishFeeder2():
     time.sleep(.5)
 
     # Read laser detector
-    isFoodLow = GPIO.input(foodLowPin)
+    self.isFoodLow = GPIO.input(self.foodLowPin)
 
     # Turn off laser
     GPIO.output(self.laserPin, False)
@@ -102,56 +102,3 @@ class FishFeeder2():
 #
 ########################################################
 
-
-########################################################
-# Function shutdown
-########################################################
-
-
-def shutdown():
-  GPIO.cleanup()
-  print
-  print "Bye!"  
-
-# End Function shutdown
-
-
-
-########################################################
-#
-# Main
-#
-########################################################
-
-try:
-  foodDoorPinA = 2
-  foodDoorPinB = 3
-  laserPin    = 4
-# 17
-
-  foodLowPin  = 24
-
-  fishFeeder = FishFeeder2(foodDoorPinA, foodDoorPinB, foodLowPin, laserPin)
-
-  fishFeeder.init()
-  fishFeeder.feedOneServing()
-
-  fishFeeder.checkFoodLow()
-  print "Food low = ", fishFeeder.isFoodLow
-
-# End try
-
-except KeyboardInterrupt:
-  # This statement is meaningless other than it allows the program to
-  # drop down to the next line.
-  print "Keyboard Interrupt"
-
-# End except
-
-shutdown()
-
-########################################################
-#
-# End Main
-#
-########################################################
