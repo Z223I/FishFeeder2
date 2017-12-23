@@ -32,6 +32,7 @@ def shutdown():
 ########################################################
 
 try:
+  powerPin = 1
   foodDoorPinA = 2
   foodDoorPinB = 3
   laserPin    = 4
@@ -39,7 +40,7 @@ try:
 
   foodLowPin  = 24
 
-  fishFeeder = FishFeeder2(foodDoorPinA, foodDoorPinB, foodLowPin, laserPin)
+  fishFeeder = FishFeeder2(powerPin, foodDoorPinA, foodDoorPinB, foodLowPin, laserPin)
 
   fishFeeder.init()
   fishFeeder.feedOneServing()

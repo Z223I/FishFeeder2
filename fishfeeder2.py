@@ -23,14 +23,14 @@ class FishFeeder2():
 # Function __init__
 ########################################################
 
-  def __init__(self, _foodDoorPinA,_foodDoorPinB, _foodLowPin, _laserPin):
+  def __init__(self, _foodPowerPin, _foodDoorPinA, _foodDoorPinB, _foodLowPin, _laserPin):
     print "fishfeeder2::__init__"
 
     # Define GPIO signals to use
     # Physical pins 11,15,16,18
     # GPIO17, GPIO18, GPIO22, GPIO23
     
-    self.foodDoor    = PowerLock(_foodDoorPinA, _foodDoorPinB)
+    self.foodDoor    = PowerLock(_foodPowerPin, _foodDoorPinA, _foodDoorPinB)
     self.foodLowPin  = _foodLowPin
     self.laserPin    = _laserPin
     self.isFoodLow   = False

@@ -15,9 +15,9 @@ import RPi.GPIO as GPIO
 #
 # This class manipulates an automotive power lock.
 #
-# It takes two pins to manipulate the power lock because
-# the polarity has to be changed to switch between
-# between states.
+# It takes three pins to manipulate the power lock.
+# One pin controls the power and two pins for changing
+# the polarity.
 #
 ########################################################
 
@@ -28,13 +28,14 @@ class PowerLock():
 # Function __init__
 ########################################################
 
-  def __init__(self, _powerLockPinA, _powerLockPinB):
+  def __init__(self, _powerPin, _powerLockPinA, _powerLockPinB):
     print "__init__"
 
     # Define GPIO signals to use
     # Physical pins 11,15,16,18
     # GPIO17, GPIO18, GPIO22, GPIO23
     
+    self.powerPin      = _powerPin
     self.powerLockPinA = _powerLockPinA
     self.powerLockPinB = _powerLockPinB
 
